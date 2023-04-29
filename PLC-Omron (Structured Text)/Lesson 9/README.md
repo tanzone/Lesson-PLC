@@ -1,28 +1,40 @@
-Welcome to Lesson 9 on Omron PLC programming using ladder logic. In this lesson, we will cover comparison and arithmetic instructions and functions.
+In this lesson 9, we will continue our exploration of Structured Text (ST) programming for Omron PLCs.
 
-Comparison instructions are used to compare values in a program. Let's start with the "EQU" instruction.
+Another important concept in ST programming is the use of structures. Structures allow us to group related variables together under a single name, making our code more organized and easier to read.
+
+Here is an example program that uses a structure to store information about a person:
 ```c
-MOV #10, D0         ; Move the value 10 into D0
-EQU D0, #10         ; Compare the value in D0 with the value 10
-MOV EQU, Y0.0       ; Output the result of the comparison to output Y0.0
-```
-In this program, the "MOV" instruction moves the value 10 into D0. The "EQU" instruction compares the value in D0 with the value 10. The "MOV" instruction moves the result of the comparison to output Y0.0.
+TYPE Person :
+STRUCT
+    FirstName : STRING(30);
+    LastName : STRING(30);
+    Age : INT;
+    Address : STRUCT
+        Street : STRING(50);
+        City : STRING(30);
+        State : STRING(2);
+        Zip : STRING(10);
+    END_STRUCT
+END_STRUCT
+END_TYPE
 
-Next, let's move on to arithmetic instructions.
-```c
-MOV #10, D0         ; Move the value 10 into D0
-ADD #5, D0          ; Add the value 5 to the value in D0
-MOV D0, Y0.0        ; Output the result of the addition to output Y0.0
-```
-In this program, the "MOV" instruction moves the value 10 into D0. The "ADD" instruction adds the value 5 to the value in D0. The "MOV" instruction moves the result of the addition to output Y0.0.
+PROGRAM Main
+VAR
+    MyPerson : Person;
+END_VAR
 
-Finally, let's combine comparison and arithmetic instructions in a program.
-```c
-MOV #10, D0         ; Move the value 10 into D0
-ADD #5, D0          ; Add the value 5 to the value in D0
-EQU D0, #15         ; Compare the value in D0 with the value 15
-MOV EQU, Y0.0       ; Output the result of the comparison to output Y0.0
+BEGIN
+    MyPerson.FirstName := "John";
+    MyPerson.LastName := "Doe";
+    MyPerson.Age := 30;
+    MyPerson.Address.Street := "123 Main St";
+    MyPerson.Address.City := "Anytown";
+    MyPerson.Address.State := "CA";
+    MyPerson.Address.Zip := "12345";
+END_PROGRAM
 ```
-In this program, the "MOV" instruction moves the value 10 into D0. The "ADD" instruction adds the value 5 to the value in D0. The "EQU" instruction compares the value in D0 with the value 15. The "MOV" instruction moves the result of the comparison to output Y0.0.
+In this example, we have defined a structure called "Person" that contains four variables: "FirstName", "LastName", "Age", and "Address". The "Address" variable is itself a structure that contains four variables: "Street", "City", "State", and "Zip".
 
-In conclusion, in this lesson, we have covered how to use comparison and arithmetic instructions and functions using Omron PLCs. In the next lesson, we will cover how to use branch instructions and functions.
+We have then declared a variable "MyPerson" of type "Person" in the main program. We can then access the variables within the structure using dot notation, as shown in the example.
+
+In conclusion, in this lesson 9, we have explored the use of structures in ST programming for Omron PLCs. Structures allow us to group related variables together under a single name, making our code more organized and easier to read. In the next lessons, we will continue to explore more advanced concepts in ST programming.
