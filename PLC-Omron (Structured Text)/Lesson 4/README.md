@@ -1,35 +1,39 @@
-Welcome to Lesson 4 on Omron PLC programming using ladder logic. In this lesson, we will cover program control instructions and functions.
 
-Let's start by creating a program that uses the JMP instruction. The JMP instruction is used to jump to a specific program step. We will use program steps 10 and 20 for this example.
+In this lesson 4, we will continue to explore Structured Text (ST) programming for Omron PLCs.
+
+One important concept in ST programming is the use of arrays. An array is a collection of variables of the same type that are grouped together under a single name and accessed using an index. We can declare arrays of any of the basic data types, such as integers, reals, and booleans.
+
+Here is an example program that demonstrates the use of an array:
 ```c
-JMP 10          ; Jump to program step 10
-MOV #1, D0      ; Move value 1 to memory location D0
-JMP 20          ; Jump to program step 20
-MOV #2, D0      ; Move value 2 to memory location D0
-OUT Y0.0        ; Output to output Y0.0
-```
-In this program, the "JMP" instruction jumps to program step 10. The next instruction moves the value 1 to memory location D0. The "JMP" instruction then jumps to program step 20, skipping the instruction that moves the value 2 to memory location D0. Finally, the output signal is turned on.
+VAR
+    My_Array : ARRAY[0..4] OF INT := [1, 2, 3, 4, 5];
+    i : INT;
+END_VAR
 
-Next, let's create a program that uses the LBL and RET instructions. The LBL instruction is used to define a label in the program. The RET instruction is used to return to the main program after a subroutine is completed.
+FOR i := 0 TO 4 DO
+    My_Array[i] := My_Array[i] * 2;
+END_FOR
+```
+In this example, we have declared an array "My_Array" of type integer with 5 elements using the "ARRAY[0..4] OF INT" syntax. We initialize the array with the values 1, 2, 3, 4, and 5 using the bracket notation.
+
+We then declare an integer variable "i". We use a "FOR" loop to iterate through the array elements using the index "i". Inside the loop, we multiply each array element by 2 and assign the result back to the same element.
+
+Another important concept in ST programming is the use of conditional statements. A conditional statement allows us to execute different code depending on whether a certain condition is true or false. The two most common types of conditional statements are "IF" statements and "CASE" statements.
+
+Here is an example program that uses an "IF" statement to determine whether a number is positive, negative, or zero:
 ```c
-LBL 10          ; Define label for subroutine
-MOV #1, D0      ; Move value 1 to memory location D0
-JSR 20          ; Jump to subroutine at label 20
-OUT Y0.0        ; Output to output Y0.0
+VAR
+    Num : INT := -5;
+END_VAR
 
-LBL 20          ; Define label for subroutine
-MOV #2, D0      ; Move value 2 to memory location D0
-RET             ; Return to main program
+IF Num > 0 THEN
+    // Number is positive
+ELSIF Num < 0 THEN
+    // Number is negative
+ELSE
+    // Number is zero
+END_IF
 ```
-In this program, the "LBL" instruction defines a label for a subroutine at program step 10. The next instruction moves the value 1 to memory location D0. The "JSR" instruction jumps to the subroutine at label 20. The "MOV" instruction in the subroutine moves the value 2 to memory location D0. The "RET" instruction returns to the main program at the instruction following the "JSR" instruction. Finally, the output signal is turned on.
+In this example, we have declared an integer variable "Num" and initialized it with the value -5. We use an "IF" statement to check whether "Num" is greater than 0, less than 0, or equal to 0. Depending on the result of the comparison, we execute different code using the "THEN", "ELSIF", and "ELSE" keywords.
 
-Finally, let's create a program that uses the FOR instruction. The FOR instruction is used to execute a block of instructions a certain number of times.
-```c
-FOR #0, #10, #1 DO  ; Execute loop 10 times
-    MOV #1, D0      ; Move value 1 to memory location D0
-    OUT Y0.0        ; Output to output Y0.0
-NEXT                ; End of loop
-```
-In this program, the "FOR" instruction executes the instructions within the loop 10 times. The "MOV" instruction moves the value 1 to memory location D0, and the output signal is turned on. The "NEXT" instruction marks the end of the loop.
-
-In conclusion, in this lesson, we have covered program control instructions and functions using Omron PLCs. In the next lesson, we will cover how to use timer and counter instructions and functions.
+In conclusion, in this lesson 4, we have explored the concepts of arrays and conditional statements in ST programming for Omron PLCs. These concepts allow us to create more flexible and powerful programs. In the next lessons, we will continue to explore more advanced concepts in ST programming.
