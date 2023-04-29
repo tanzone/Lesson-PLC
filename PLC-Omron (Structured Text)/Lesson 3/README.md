@@ -1,29 +1,57 @@
-Welcome to Lesson 3 on Omron PLC programming using ladder logic. In this lesson, we will cover data manipulation instructions and functions.
+In this lesson 3, we will continue to explore Structured Text (ST) programming for Omron PLCs.
 
-Let's start by creating a program that uses the MOV instruction. The MOV instruction is used to move a value from one memory location to another. We will use memory locations D0 and D1 for this example.
+One important concept in ST programming is the use of program organization units (POUs). POUs are reusable blocks of code that can be called from other parts of a program. They include function blocks, function declarations, and function calls.
+
+Here is an example program that demonstrates the use of a function declaration and call:
 ```c
-MOV #10, D0     ; Move value 10 to memory location D0
-MOV D0, D1      ; Move value in D0 to memory location D1
-OUT Y0.0        ; Output to output Y0.0
-```
-In this program, the "MOV" instruction moves the value 10 to memory location D0. The next "MOV" instruction then moves the value in memory location D0 to memory location D1. Finally, the output signal is turned on.
+FUNCTION Add_Two_Numbers : INT
+VAR_INPUT
+    Num1 : INT;
+    Num2 : INT;
+END_VAR
 
-Next, let's create a program that uses the ADD instruction. The ADD instruction is used to add two values together. We will use memory locations D0 and D1 for this example.
+VAR_OUTPUT
+    Result : INT;
+END_VAR
+
+Result := Num1 + Num2;
+Add_Two_Numbers := Result;
+END_FUNCTION
+
+VAR
+    A : INT := 5;
+    B : INT := 7;
+    C : INT;
+END_VAR
+
+C := Add_Two_Numbers(Num1 := A, Num2 := B);
+```
+In this example, we have declared a function "Add_Two_Numbers" that takes two integer input parameters "Num1" and "Num2" and returns an integer output parameter "Result". The function adds the two input parameters together and assigns the result to the "Result" variable. It then returns the value of "Result" using the function name.
+
+We then declare three integer variables "A", "B", and "C". We assign the values 5 and 7 to "A" and "B", respectively. We then call the "Add_Two_Numbers" function and pass in the values of "A" and "B" as input parameters. The function adds these values together and returns the result, which we assign to "C".
+
+Another important concept in ST programming is the use of structures. A structure is a collection of variables of different types that are grouped together under a single name. We can access individual elements of a structure using dot notation.
+
+Here is an example program that uses a structure to store information about a person and then displays that information on a screen:
 ```c
-MOV #10, D0     ; Move value 10 to memory location D0
-MOV #20, D1     ; Move value 20 to memory location D1
-ADD D0, D1      ; Add values in D0 and D1
-OUT Y0.0        ; Output to output Y0.0
-```
-In this program, the "ADD" instruction adds the values in memory locations D0 and D1 together. The output signal is turned on, which represents the result of the addition.
+TYPE Person :
+STRUCT
+    Name : STRING(20);
+    Age : INT;
+    Height : REAL;
+END_STRUCT
+END_TYPE
 
-Finally, let's create a program that uses the CMP function. The CMP function is used to compare two values and determine which is greater. We will use memory locations D0 and D1 for this example.
-```c
-MOV #10, D0     ; Move value 10 to memory location D0
-MOV #20, D1     ; Move value 20 to memory location D1
-CMP D0, D1      ; Compare values in D0 and D1
-OUT Y0.0        ; Output to output Y0.0
-```
-In this program, the "CMP" function compares the values in memory locations D0 and D1. The output signal is turned on if the value in D1 is greater than the value in D0.
+VAR
+    My_Person : Person := (Name := 'John', Age := 25, Height := 1.8);
+END_VAR
 
-In conclusion, in this lesson, we have covered data manipulation instructions and functions using Omron PLCs. In the next lesson, we will cover how to use program control instructions and functions.
+// Display information on screen
+```
+In this example, we have declared a new data type "Person" using the "TYPE...STRUCT...END_STRUCT...END_TYPE" syntax. The "Person" data type contains three elements: a string variable "Name", an integer variable "Age", and a real variable "Height".
+
+We then declare a variable "My_Person" of type "Person" and initialize it with values for the "Name", "Age", and "Height" elements using the dot notation.
+
+We can access the values of the individual elements of the structure using the dot notation as well. For example, we can display the person's name on a screen by using "My_Person.Name".
+
+In conclusion, in this lesson 3, we have explored the concepts of program organization units (POUs) and structures in ST programming for Omron PLCs. These concepts allow us to create more organized and structured programs. In the next lessons, we will continue to explore more advanced concepts in ST programming.
